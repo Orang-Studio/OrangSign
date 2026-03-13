@@ -103,7 +103,7 @@ $xaml.SelectNodes("//*[@Name]") | ForEach-Object {
 
 # Script variables
 $script:certPath = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "cert.pfx"
-$script:certPassword = "Adasjusk2025"
+$script:certPassword = "Password123"
 
 # Update certificate path textbox
 $controls.txtCertPath.Text = $script:certPath
@@ -129,14 +129,14 @@ $controls.btnCreateCert.Add_Click({
     try {
         Write-Log "Creating new certificate..." "txtCertLog"
           $cert = New-SelfSignedCertificate `
-            -Subject "CN=InterJava Projects" `
+            -Subject "CN=Orang Studio" `
             -KeyUsage DigitalSignature `
             -KeySpec Signature `
             -KeyLength 2048 `
             -HashAlgorithm SHA256 `
             -Provider "Microsoft Enhanced RSA and AES Cryptographic Provider" `
             -Type CodeSigningCert `
-            -NotAfter (Get-Date).AddYears(5) `
+            -NotAfter (Get-Date).AddYears(8) `
             -CertStoreLocation "Cert:\CurrentUser\My"
 
         Write-Log "Exporting certificate to $script:certPath" "txtCertLog"
@@ -215,3 +215,4 @@ $controls.btnClose.Add_Click({ $window.Close() })
 
 # Show the window
 $window.ShowDialog() | Out-Null
+
