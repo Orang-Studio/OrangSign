@@ -1,22 +1,27 @@
-# First Steps
-1. Install [Visual Studio Community Edition](https://visualstudio.microsoft.com/downloads/)
-2. During installation, select the ".NET desktop development" workload (you can add others later).
-3. Finish installation.
+# OrangSign (Linux)
 
-# Use the Signing Tool to Create a Certificate
-1. Launch the Signing Tool
-2. Switch to the Create Certificate tab.
-3. Press Create Certificate button
-4. It will generate a .pfx file.
+native Rust + [GPUI](https://gpui.rs/) rewrite
 
-# Sign a .exe File Using the Tool
-1. Go to the Sign Executable tab.
-3. Click Browse… next find Executable and select the .exe file you want to sign.
-4. Click Sign.
-5. The Status box will confirm whether the signing succeeded.
+## Where the certificate lives
 
-📝 This certificate is self-signed and best used for testing or internal tools. For production, use a certificate from a trusted Certificate Authority (CA).
+1. If cert.pfx exists next to the executable, it is used
+2. Otherwise ~/.local/share/OrangStudio/OrangSign/cert.pfx is used.
 
-Thanks For Support
-Release date: 2025-05-12
-<p align="center">Made with Love ❤️</p>
+## Verifying a detached signature
+
+once your certificate is trusted
+
+```sh
+openssl cms -verify -binary -inform DER -in <file>.p7s -content <file> -purpose any -out /dev/null
+```
+
+## Command line
+
+```sh
+orangsign                      # GUI
+orangsign --sign <file|folder> # sign
+```
+
+## Why tf I made this
+
+for developer teams that need to sign their binaries, packages, or other build artifacts so systems can verify their authenticity. Code signing confirms that what you’re sending the genuine binary for your team and hasn’t been tampered with. Studios would refactor this code and make their own version of it (like changing the CN or something else).

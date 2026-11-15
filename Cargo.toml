@@ -1,0 +1,17 @@
+[package]
+name = "orangsign"
+version = "1.0.0"
+edition = "2024"
+description = "linux code signing tool"
+
+[dependencies]
+gpui = "0.2.2"
+anyhow = "1"
+libc = "=0.2.189"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true
